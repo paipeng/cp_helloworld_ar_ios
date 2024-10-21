@@ -18,6 +18,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the view's delegate
         sceneView.delegate = self
+        sceneView.session.delegate = self
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
@@ -70,5 +71,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
+    }
+}
+
+extension ViewController : ARSessionDelegate {
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        print("session didUpdate:")
+        let capturedImage: CVPixelBuffer = frame.capturedImage
+        var image = UIImage(pixelBuffer: capturedImage)
+        if image != nil {
+            image = nil
+        }
     }
 }
